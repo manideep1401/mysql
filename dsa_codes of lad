@@ -1,0 +1,255 @@
+my dsa::
+
+  lab-3:::===
+    -------------
+1st:::::
+-----------------------------------------
+    class Queue:
+    def __init__(self, size):
+        self.size = size
+        self.queue = [None] * size
+        self.front = 0
+        self.rear = -1
+        self.count = 0
+
+    def enqueue(self, value):
+        if self.count == self.size:
+            print("Queue is full, cannot enqueue", value)
+            return
+        self.rear = (self.rear + 1) % self.size
+        self.queue[self.rear] = value
+        self.count += 1
+        print(f"operation: enqueue {value}")
+        self.display()
+
+    def dequeue(self):
+        if self.count == 0:
+            print("Queue is empty, cannot dequeue")
+            return
+        removed = self.queue[self.front]
+        self.queue[self.front] = None
+        self.front = (self.front + 1) % self.size
+        self.count -= 1
+        print("operation: dequeue")
+        print(f"removed: {removed}")
+        self.display()
+
+    def display(self):
+        items = []
+        idx = self.front
+        cnt = self.count
+        while cnt:
+            items.append(self.queue[idx])
+            idx = (idx + 1) % self.size
+            cnt -= 1
+        print(f"queue: {items}\n")
+
+if __name__ == "__main__":
+    n = 5
+    print(f"initial queue size : {n}")
+    q = Queue(n)
+    ops = [
+        ('enqueue', 10),
+        ('enqueue', 20),
+        ('dequeue', None),
+      
+    ]
+    for op in ops:
+        if op[0] == 'enqueue':
+            q.enqueue(op[1])
+        elif op[0] == 'dequeue':
+            q.dequeue()
+===================================================================================
+
+          3nd::::
+            ---------------------------
+class CircularQueue:
+    def __init__(self, size):
+        self.size = size
+        self.queue = [None] * size
+        self.front = -1
+        self.rear = -1
+
+    def enqueue(self, value):
+        if ((self.rear + 1) % self.size == self.front):
+            print(f"operation: enqueue {value}")
+            print("queue is full, cannot enqueue")
+            self.display()
+            return
+        if self.front == -1:  
+            self.front = 0
+            self.rear = 0
+        else:
+            self.rear = (self.rear + 1) % self.size
+        self.queue[self.rear] = value
+        print(f"operation: enqueue {value}")
+        self.display()
+
+    def dequeue(self):
+        if self.front == -1:
+            print("operation: dequeue")
+            print("queue is empty, cannot dequeue")
+            self.display()
+            return
+        removed = self.queue[self.front]
+        if self.front == self.rear:
+            self.front = -1
+            self.rear = -1
+        else:
+            self.front = (self.front + 1) % self.size
+        print("operation: dequeue")
+        print(f"removed: {removed}")
+        self.display()
+
+    def display(self):
+        temp = []
+        if self.front == -1:
+            temp = ['_'] * self.size
+        else:
+            i = self.front
+            while True:
+                temp.append(self.queue[i] if self.queue[i] is not None else '_')
+                if i == self.rear:
+                    break
+                i = (i + 1) % self.size
+            while len(temp) < self.size:
+                temp.append('_')
+        print(f"queue:{temp} front={self.front} rear={self.rear}\n")
+
+cq = CircularQueue(4)
+cq.enqueue(1)
+cq.enqueue(2)
+cq.enqueue(3)
+class CircularQueue:
+    def __init__(self, size):
+        self.size = size
+        self.queue = [None] * size
+        self.front = -1
+        self.rear = -1
+
+    def enqueue(self, value):
+        if ((self.rear + 1) % self.size == self.front):
+            print(f"operation: enqueue {value}")
+            print("queue is full, cannot enqueue")
+            self.display()
+            return
+        if self.front == -1: 
+            self.front = 0
+            self.rear = 0
+        else:
+            self.rear = (self.rear + 1) % self.size
+        self.queue[self.rear] = value
+        print(f"operation: enqueue {value}")
+        self.display()
+
+    def dequeue(self):
+        if self.front == -1:
+            print("operation: dequeue")
+            print("queue is empty, cannot dequeue")
+            self.display()
+            return
+        removed = self.queue[self.front]
+        if self.front == self.rear:
+            self.front = -1
+            self.rear = -1
+        else:
+            self.front = (self.front + 1) % self.size
+        print("operation: dequeue")
+        print(f"removed: {removed}")
+        self.display()
+
+    def display(self):
+        temp = []
+        if self.front == -1:
+            temp = ['_'] * self.size
+        else:
+            i = self.front
+            while True:
+                temp.append(self.queue[i] if self.queue[i] is not None else '_')
+                if i == self.rear:
+                    break
+                i = (i + 1) % self.size
+            while len(temp) < self.size:
+                temp.append('_')
+        print(f"queue:{temp} front={self.front} rear={self.rear}\n")
+
+cq = CircularQueue(4)
+cq.enqueue(1)
+cq.enqueue(2)
+cq.enqueue(3)
+cq.enqueue(4)    
+cq.dequeue()
+cq.enqueue(5)     
+cq.dequeue()
+cq.enqueue(6)
+cq.display()
+cq.dequeue()
+cq.enqueue(5)    
+cq.dequeue()
+cq.enqueue(6)
+cq.display()
+==================================================================================================
+
+          2nd:::
+
+class Node:
+    def __init__(self, data):  # Corrected constructor
+        self.data = data
+        self.next = None
+
+class Queue:
+    def __init__(self):  # Corrected constructor
+        self.front = self.rear = None
+
+    def enqueue(self, value):
+        new_node = Node(value)
+        if self.rear is None:
+            self.front = self.rear = new_node
+        else:
+            self.rear.next = new_node
+            self.rear = new_node
+        print(f"Enqueued {value}")
+
+    def dequeue(self):
+        if self.front is None:
+            print("Queue is empty")
+            return
+        removed = self.front.data
+        self.front = self.front.next
+        if self.front is None:
+            self.rear = None
+        print(f"Removed {removed}")
+
+    def display(self):
+        if self.front is None:
+            print("Queue is empty")
+            return
+        current = self.front
+        while current:
+            print(f"{current.data} -> ", end="")
+            current = current.next
+        print("NULL")
+
+# Menu-driven operations
+queue = Queue()
+while True:
+    print("\n1. Enqueue\n2. Dequeue\n3. Display\n4. Exit")
+    choice = input("Enter your choice: ")
+
+    if choice == '1':
+        value = int(input("Enter value to enqueue: "))
+        queue.enqueue(value)
+    elif choice == '2':
+        queue.dequeue()
+    elif choice == '3':
+        queue.display()
+    elif choice == '4':
+        print("Exiting...")
+        break
+    else:
+        print("Invalid choice")
+
+            
+
+
+          
