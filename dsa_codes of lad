@@ -257,7 +257,7 @@ lab___--4
 import time
 import random
 
-# Insertion Sort
+# Insertion Sort (in-place sorting)
 def insertion_sort(arr):
     for i in range(1, len(arr)):
         key = arr[i]
@@ -268,7 +268,7 @@ def insertion_sort(arr):
         arr[j + 1] = key
     return arr
 
-# Merge Sort
+# Merge Sort (returns new sorted list)
 def merge_sort(arr):
     if len(arr) > 1:
         mid = len(arr) // 2
@@ -280,6 +280,7 @@ def merge_sort(arr):
 def merge(left, right):
     result = []
     i = j = 0
+    # Merge two sorted lists into a sorted result
     while i < len(left) and j < len(right):
         if left[i] < right[j]:
             result.append(left[i])
@@ -287,45 +288,48 @@ def merge(left, right):
         else:
             result.append(right[j])
             j += 1
+    # Append remaining elements
     result.extend(left[i:])
     result.extend(right[j:])
     return result
 
 # Test Input
 test_input = [64, 34, 25, 5, 22]
-
-# Timing Insertion Sort
+print("inputvalues are : ", test_input)
+# Timing Insertion Sort on test input
 insertion_input = test_input.copy()
-start_time = time.time()
+start_time = time.perf_counter()
 insertion_result = insertion_sort(insertion_input)
-insertion_time = time.time() - start_time
+insertion_time = time.perf_counter() - start_time
 
-# Timing Merge Sort
+# Timing Merge Sort on test inputprint("inputvalues are : " test_input)
 merge_input = test_input.copy()
-start_time = time.time()
+start_time = time.perf_counter()
 merge_result = merge_sort(merge_input)
-merge_time = time.time() - start_time
+merge_time = time.perf_counter() - start_time
 
 print("Insertion Sort Result:", insertion_result)
 print("Insertion Sort Time: {:.8f} seconds".format(insertion_time))
+
+print("inputvalues are : ", test_input)
 print("Merge Sort Result:", merge_result)
 print("Merge Sort Time: {:.8f} seconds".format(merge_time))
 
-# For larger comparison
-print("\n--- Performance on random list of 50 integers ---")
+# Performance comparison on random list of 50 integers
+print("\n--- ---")
 random_list = random.sample(range(1, 1000), 50)
 
-# Insertion sort on large list
-start_time = time.time()
-insertion_sort(random_list.copy())
-insertion_large_time = time.time() - start_time
+# Time Insertion Sort on random list
+insertion_list = random_list.copy()
+start_time = time.perf_counter()
+insertion_sort(insertion_list)
+insertion_large_time = time.perf_counter() - start_time
 
-# Merge sort on large list
-start_time = time.time()
-merge_sort(random_list.copy())
-merge_large_time = time.time() - start_time
+# Time Merge Sort on random list
+merge_list = random_list.copy()
+start_time = time.perf_counter()
+merge_sort(merge_list)
+merge_large_time = time.perf_counter() - start_time
 
-print("Insertion Sort (50 elements): {:.8f} seconds".format(insertion_large_time))
-print("Merge Sort (50 elements): {:.8f} seconds".format(merge_large_time))
-
-          
+print("Insertion Sort (50 elements) Time: {:.8f} seconds".format(insertion_large_time))
+print("Merge Sort (50 elements) Time: {:.8f} seconds".format(merge_large_time))
