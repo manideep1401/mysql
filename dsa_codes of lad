@@ -254,6 +254,78 @@ while True:
 
 lab___--4
 
+import time
+import random
 
+# Insertion Sort
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and key < arr[j]:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr
+
+# Merge Sort
+def merge_sort(arr):
+    if len(arr) > 1:
+        mid = len(arr) // 2
+        L = merge_sort(arr[:mid])
+        R = merge_sort(arr[mid:])
+        return merge(L, R)
+    return arr
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+
+# Test Input
+test_input = [64, 34, 25, 5, 22]
+
+# Timing Insertion Sort
+insertion_input = test_input.copy()
+start_time = time.time()
+insertion_result = insertion_sort(insertion_input)
+insertion_time = time.time() - start_time
+
+# Timing Merge Sort
+merge_input = test_input.copy()
+start_time = time.time()
+merge_result = merge_sort(merge_input)
+merge_time = time.time() - start_time
+
+print("Insertion Sort Result:", insertion_result)
+print("Insertion Sort Time: {:.8f} seconds".format(insertion_time))
+print("Merge Sort Result:", merge_result)
+print("Merge Sort Time: {:.8f} seconds".format(merge_time))
+
+# For larger comparison
+print("\n--- Performance on random list of 50 integers ---")
+random_list = random.sample(range(1, 1000), 50)
+
+# Insertion sort on large list
+start_time = time.time()
+insertion_sort(random_list.copy())
+insertion_large_time = time.time() - start_time
+
+# Merge sort on large list
+start_time = time.time()
+merge_sort(random_list.copy())
+merge_large_time = time.time() - start_time
+
+print("Insertion Sort (50 elements): {:.8f} seconds".format(insertion_large_time))
+print("Merge Sort (50 elements): {:.8f} seconds".format(merge_large_time))
 
           
